@@ -5,90 +5,86 @@ import {
 
 import Picker from './Picker';
 import TimePicker from './TimePicker';
+import DatePicker from './DatePicker';
 import moment from 'moment';
 import _ from 'lodash';
 
 const DATE_FORMAT = 'ddd MMM D';
 
-checkIfToday = (date) => {
-  return moment().isSame(moment(date), 'day');
-}
+// checkIfToday = (date) => {
+//   return moment().isSame(moment(date), 'day');
+// }
 
-getDays = (dateSelected, min, max) => {
-  const now = moment();
-  var minDate = moment(min);
-  var maxDate = moment(max);
-  if (!minDate.isValid()) {
-    throw new Error('minDate is not a valid date string');
-  } else if (!maxDate.isValid()) {
-    throw new Error('maxDate is not a valid date string');
-  } else if (minDate.isAfter(maxDate)) {
-    throw new Error('maxDate should be after minDate');
-  }
-  const days = [];
-  var stopChecking = false;
-  var l = 0;
-  var def = 0;
-  for (var i = minDate; maxDate.isAfter(minDate); minDate.add(1, 'day')) {
-    var label = minDate.format(DATE_FORMAT);
-    const date = minDate.toDate();
-    if (dateSelected.isSame(minDate, 'day')) {
-      def = l;
-    }
-    if (checkIfToday(date) && !stopChecking) {
-      label = 'Today';
-      stopChecking = true;
-    }
-    l++;
-    days.push({ date, label, });
-  }
-  return { days, def };
-}
+// getDays = (dateSelected, min, max) => {
+//   const now = moment();
+//   var minDate = moment(min);
+//   var maxDate = moment(max);
+//   if (!minDate.isValid()) {
+//     throw new Error('minDate is not a valid date string');
+//   } else if (!maxDate.isValid()) {
+//     throw new Error('maxDate is not a valid date string');
+//   } else if (minDate.isAfter(maxDate)) {
+//     throw new Error('maxDate should be after minDate');
+//   }
+//   const days = [];
+//   var stopChecking = false;
+//   var l = 0;
+//   var def = 0;
+//   for (var i = minDate; maxDate.isAfter(minDate); minDate.add(1, 'day')) {
+//     var label = minDate.format(DATE_FORMAT);
+//     const date = minDate.toDate();
+//     if (dateSelected.isSame(minDate, 'day')) {
+//       def = l;
+//     }
+//     if (checkIfToday(date) && !stopChecking) {
+//       label = 'Today';
+//       stopChecking = true;
+//     }
+//     l++;
+//     days.push({ date, label, });
+//   }
+//   return { days, def };
+// }
 export default class DateTimePickerComponent extends React.Component {
   constructor(props) {
     super(props);
     const dateSelected = moment(props.date).isValid() ? moment(props.date) : moment();
-    const dates = getDays(dateSelected, props.minDate, props.maxDate);
+    // const dates = getDays(dateSelected, props.minDate, props.maxDate);
     this.state = {
       ...props,
-      daysList: dates.days,
-      daySelected: dates.def,
     };
   }
 
   render() {
     const {
-      daysList,
+      // daysList,
       date,
-      daySelected,
+      // daySelected,
     } = this.state;
+    // console.log(daySelected);
     return (
       <View style={[{ flexDirection: 'row' }, this.state.style]}>
-        <Picker
-          selectedValue={daySelected}
-          style={[{ width: 100, height: 170 }, this.state.datePickerStyle]}
-          itemStyle={this.state.datePickerItemStyle}
-          curved={this.state.curved}
-          cyclic={this.state.cyclic}
+        <DatePicker
+          style={this.state.timePickerStyle}
+          date={this.state.date}
+          dayPickerStyle={this.state.dayPickerStyle}
+          monthPickerStyle={this.state.monthPickerStyle}
+          yearPickerStyle={this.state.yearPickerStyle}
+          dayPickerItemStyle={this.state.dayPickerItemStyle}
+          monthPickerItemStyle={this.state.monthPickerItemStyle}
+          yearPickerItemStyle={this.state.yearPickerItemStyle}
           atmospheric={this.state.atmospheric}
           indicator={this.state.indicator}
+          minuteInterval={this.state.minuteInterval}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(daySelected) => {
-            const selected = moment(daysList[daySelected].date);
-            const year = selected.year();
-            const month = selected.month();
-            const day = selected.date();
-            const newDate = moment(date).set({ year, month, date: day }).toDate();
-            this.props.onDateChange(newDate)
-            this.setState({ daySelected, date: newDate })
-          }}>
-            {daysList.map((date, i) => {
-              return (
-                <Picker.Item label={date.label} value={i} key={"daysList"+i}/>
-              );
-            })}
-        </Picker>
+          onDateChange={(date) => {
+            this.props.onDateChange(date)
+            this.setState({
+              date,
+            });
+          }}
+        />
         <TimePicker
           style={this.state.timePickerStyle}
           date={this.state.date}
@@ -127,9 +123,6 @@ DateTimePickerComponent.defaultProps = {
   onDateChange: () => {},
   minuteInterval: 30,
   isPeriodCapitalized: true,
-  style: {},
-  datePickerStyle: {},
-  datePickerItemStyle: { color:"black", fontSize:18 },
   indicator: true,
   indicatorColor: '#ebebeb',
   indicatorSize: 1,
@@ -143,9 +136,6 @@ DateTimePickerComponent.propTypes = {
   onDateChange: React.PropTypes.func,
   minuteInterval: React.PropTypes.number,
   isPeriodCapitalized: React.PropTypes.bool,
-  style: React.PropTypes.object,
-  datePickerStyle: React.PropTypes.object,
-  datePickerItemStyle: React.PropTypes.object,
   indicator: React.PropTypes.bool,
   indicatorSize: React.PropTypes.number,
   indicatorColor: React.PropTypes.string,

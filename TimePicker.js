@@ -110,11 +110,10 @@ export default class TimePicker extends React.Component {
       minutesList,
       periodsList
     } = this.state;
-    console.log(this.state.hourSelected);
     return (
       <View style={[{ flexDirection: 'row' }, this.state.style]}>
         <Picker
-          style={[{ width: 50, height: 170 }, this.state.hourPickerStyle]}
+          style={[{ width: 40, height: 170 }, this.state.hourPickerStyle]}
           selectedValue={this.state.hourSelected}
           itemStyle={this.state.hourPickerItemStyle}
           curved={this.state.curved}
@@ -137,7 +136,7 @@ export default class TimePicker extends React.Component {
             })}
         </Picker>
         <Picker
-          style={[{ width: 50, height: 170 }, this.state.minutePickerStyle]}
+          style={[{ width: 40, height: 170 }, this.state.minutePickerStyle]}
           selectedValue={this.state.minuteSelected}
           itemStyle={this.state.minutePickerItemStyle}
           curved={this.state.curved}
@@ -161,7 +160,7 @@ export default class TimePicker extends React.Component {
             })}
         </Picker>
         <Picker
-          style={[{ width: 50, height: 170 }, this.state.periodPickerStyle]}
+          style={[{ width: 40, height: 170 }, this.state.periodPickerStyle]}
           selectedValue={this.state.periodSelected}
           itemStyle={this.state.periodPickerItemStyle}
           atmospheric={this.state.atmospheric}

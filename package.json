@@ -1,15 +1,50 @@
 {
-  "name": "react-native-ios-style-picker",
-  "version": "1.1.1",
+  "_args": [
+    [
+      {
+        "raw": "react-native-ios-style-picker@https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+        "scope": null,
+        "escapedName": "react-native-ios-style-picker",
+        "name": "react-native-ios-style-picker",
+        "rawSpec": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+        "spec": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+        "type": "remote"
+      },
+      "/Users/chriszan/sendhelper_partners"
+    ]
+  ],
+  "_from": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+  "_id": "react-native-ios-style-picker@1.1.1",
+  "_inCache": true,
+  "_location": "/react-native-ios-style-picker",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-ios-style-picker@https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+    "scope": null,
+    "escapedName": "react-native-ios-style-picker",
+    "name": "react-native-ios-style-picker",
+    "rawSpec": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+    "spec": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+    "type": "remote"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+  "_shasum": "26f71faf386cf0d4d3d2544e7c17ebf75feb7eca",
+  "_shrinkwrap": null,
+  "_spec": "react-native-ios-style-picker@https://github.com/damathryx/react-native-ios-style-picker/tarball/new",
+  "_where": "/Users/chriszan/sendhelper_partners",
+  "author": {
+    "name": "damathryx"
+  },
+  "bugs": {
+    "url": "https://github.com/damathryx/react-native-ios-style-picker/issues"
+  },
+  "dependencies": {},
   "description": "React native ios style picker for android.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/damathryx/react-native-ios-style-picker.git"
-  },
+  "devDependencies": {},
+  "homepage": "https://github.com/damathryx/react-native-ios-style-picker#readme",
   "keywords": [
     "react-native",
     "picker",
@@ -18,11 +53,18 @@
     "date",
     "time"
   ],
-  "author": "damathryx",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/damathryx/react-native-ios-style-picker/issues"
+  "main": "index.js",
+  "name": "react-native-ios-style-picker",
+  "optionalDependencies": {},
+  "readme": "# react-native-ios-style-picker\n[![npm version](http://img.shields.io/npm/v/react-native-ios-style-picker.svg?style=flat-square)](https://npmjs.org/package/react-native-ios-style-picker \"View this project on npm\")\n[![npm version](http://img.shields.io/npm/dm/react-native-ios-style-picker.svg?style=flat-square)](https://npmjs.org/package/react-native-ios-style-picker \"View this project on npm\")\n\n## Introduction\nCross platform Picker component based on React-native.\n\nSince picker is originally supported by ios while Android only supports a ugly Spinner component. If you want to have the same user behaviour, you can use this.\n\nThe android component is based on https://github.com/AigeStudio/WheelPicker which runs super fast and smoothly. It also supports curved effect which make it exactly the same looking and feel as the ios picker.\n![](https://raw.githubusercontent.com/lesliesam/react-native-ios-style-picker/master/demo.gif)\n![](https://raw.githubusercontent.com/lesliesam/react-native-ios-style-picker/master/demo_android.gif)\n\n## How to use\n\nRun command\n\nFor apps using RN 0.32 or higher, please run\n```\nnpm i react-native-ios-style-picker --save\n```\nFor apps using RN 0.31 or less, please run\n```\nnpm install --save --save-exact react-native-ios-style-picker\n```\nAdd in settings.gradle\n```\ninclude ':react-native-ios-style-picker'\nproject(':react-native-ios-style-picker').projectDir = new File(settingsDir, '../node_modules/react-native-ios-style-picker/android')\n```\nAdd in app/build.gradle\n```\ncompile project(':react-native-ios-style-picker')\n```\nModify MainActivity\n```\n    import com.zyu.ReactNativeWheelPickerPackage;\n    ......\n\n    protected List<ReactPackage> getPackages() {\n        return Arrays.<ReactPackage>asList(\n            new MainReactPackage(), new ReactNativeWheelPickerPackage()\n        );\n    }\n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/damathryx/react-native-ios-style-picker.git"
   },
-  "homepage": "https://github.com/damathryx/react-native-ios-style-picker#readme",
-  "dependencies": {}
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.1"
 }

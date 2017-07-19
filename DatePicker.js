@@ -43,6 +43,8 @@ export default class DatePickerComponent extends Component {
     const yearSelected = dateSelected.year();
     const monthSelected = dateSelected.month();
     const daySelected = dateSelected.date();
+    const hourSelected = dateSelected.hour();
+    const minuteSelected = dateSelected.minute();
     const daysList = getDaysInMonth(dateSelected);
     this.state = {
       ...props,
@@ -53,6 +55,8 @@ export default class DatePickerComponent extends Component {
       monthSelected,
       yearList,
       yearSelected,
+      hourSelected,
+      minuteSelected,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -61,6 +65,8 @@ export default class DatePickerComponent extends Component {
       const yearSelected = dateSelected.year();
       const monthSelected = dateSelected.month();
       const daySelected = dateSelected.date();
+      const hourSelected = dateSelected.hour();
+      const minuteSelected = dateSelected.minute();
       const daysList = getDaysInMonth(dateSelected);
       this.setState({
         ...nextProps,
@@ -69,6 +75,8 @@ export default class DatePickerComponent extends Component {
         daySelected,
         monthSelected,
         yearSelected,
+        hourSelected,
+        minuteSelected,
       });
     }
   }
@@ -79,6 +87,8 @@ export default class DatePickerComponent extends Component {
       monthList,
       monthSelected,
       daysList,
+      hourSelected,
+      minuteSelected,
     } = this.state;
     let { daySelected } = this.state;
     return (
@@ -94,10 +104,10 @@ export default class DatePickerComponent extends Component {
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
           onValueChange={(monthSelected) => {
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected });
+            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
             while (!date.isValid()) {
               daySelected--;
-              date = moment({ year: yearSelected, month: monthSelected, day: daySelected })
+              date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
             }
             const daysList = getDaysInMonth(date);
             this.props.onDateChange(date.toDate());
@@ -123,7 +133,7 @@ export default class DatePickerComponent extends Component {
           indicatorColor={this.state.indicatorColor}
           onValueChange={(daySelected) => {
             // console.log(daySelected);
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected });
+            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
             this.props.onDateChange(date.toDate());
             this.setState({ daySelected })
           }}>
@@ -142,10 +152,10 @@ export default class DatePickerComponent extends Component {
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
           onValueChange={(yearSelected, i) => {
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected });
+            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
             while (!date.isValid()) {
               daySelected--;
-              date = moment({ year: yearSelected, month: monthSelected, day: daySelected })
+              date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
             }
             const daysList = getDaysInMonth(date);
             this.props.onDateChange(date.toDate());
@@ -164,7 +174,7 @@ export default class DatePickerComponent extends Component {
   }
 }
 
-const currentYear = moment({ year: moment().year(), month: moment().month(), day: 15, hour: 0, minute: 0, ms: 0 });
+const currentYear = moment({ year: moment().year(), month: moment().month(), day: 15 });
 const minYear = currentYear.year() - 5;
 const maxYear = currentYear.year() + 5;
 
