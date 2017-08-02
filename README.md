@@ -1,6 +1,4 @@
 # react-native-ios-style-picker
-[![npm version](http://img.shields.io/npm/v/react-native-ios-style-picker.svg?style=flat-square)](https://npmjs.org/package/react-native-ios-style-picker "View this project on npm")
-[![npm version](http://img.shields.io/npm/dm/react-native-ios-style-picker.svg?style=flat-square)](https://npmjs.org/package/react-native-ios-style-picker "View this project on npm")
 
 ## Introduction
 Cross platform Picker component based on React-native.
@@ -13,16 +11,17 @@ The android component is based on https://github.com/AigeStudio/WheelPicker whic
 
 ## How to use
 
-Run command
-
-For apps using RN 0.32 or higher, please run
+###Installation
 ```
 npm i react-native-ios-style-picker --save
 ```
-For apps using RN 0.31 or less, please run
+###Linking
 ```
-npm install --save --save-exact react-native-ios-style-picker
+react-native- link react-native-ios-style-picker
 ```
+
+###Manual Linking
+
 Add in settings.gradle
 ```
 include ':react-native-ios-style-picker'
@@ -39,7 +38,8 @@ Modify MainActivity
 
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage(), new ReactNativeWheelPickerPackage()
+            new MainReactPackage(),
+            new ReactNativeWheelPickerPackage()
         );
     }
 ```
