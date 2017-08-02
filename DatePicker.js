@@ -9,7 +9,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 getNumberOfDaysInMonth = (date) => {
-  return date.daysInMonth()
+  return date.daysInMonth();
 }
 
 getDaysInMonth = (date) => {
@@ -19,7 +19,6 @@ getDaysInMonth = (date) => {
 }
 
 getYearList = (min, max) => {
-  console.log(min);
   const now = moment();
   var minDate = moment(min);
   var maxDate = moment(max);
@@ -30,7 +29,6 @@ getYearList = (min, max) => {
   } else if (minDate.isAfter(maxDate)) {
     throw new Error('maxDate should be after minDate');
   }
-  console.log(minDate.format('llll'), maxDate.year());
   return _.range(minDate.year(), maxDate.year());
 }
 
@@ -59,7 +57,7 @@ export default class DatePickerComponent extends Component {
       minuteSelected,
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.date !== this.props.date) {
       const dateSelected = moment(nextProps.date).isValid ? moment(nextProps.date) : moment();
       const yearSelected = dateSelected.year();
@@ -79,6 +77,57 @@ export default class DatePickerComponent extends Component {
         minuteSelected,
       });
     }
+  }
+  _onMonthValueChange = (monthSelected) => {
+    const {
+      yearSelected,
+      hourSelected,
+      minuteSelected,
+    } = this.state;
+    let { daySelected } = this.state;
+    let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
+    while (!date.isValid()) {
+      daySelected--;
+      date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
+    }
+    const daysList = getDaysInMonth(date);
+    this.props.onDateChange(date.toDate());
+    this.setState({
+      monthSelected,
+      daysList,
+      daySelected
+    });
+  }
+  _onDayValueChange = (daySelected) => {
+    const {
+      yearSelected,
+      monthSelected,
+      hourSelected,
+      minuteSelected,
+    } = this.state;
+    let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
+    this.props.onDateChange(date.toDate());
+    this.setState({ daySelected })
+  }
+  _onYearValueChange = (yearSelected) => {
+    const {
+      monthSelected,
+      hourSelected,
+      minuteSelected,
+    } = this.state;
+    let { daySelected } = this.state;
+    let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
+    while (!date.isValid()) {
+      daySelected--;
+      date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
+    }
+    const daysList = getDaysInMonth(date);
+    this.props.onDateChange(date.toDate());
+    this.setState({
+      yearSelected,
+      daysList,
+      daySelected
+    })
   }
   render() {
     const {
@@ -103,23 +152,10 @@ export default class DatePickerComponent extends Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(monthSelected) => {
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
-            while (!date.isValid()) {
-              daySelected--;
-              date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
-            }
-            const daysList = getDaysInMonth(date);
-            this.props.onDateChange(date.toDate());
-            this.setState({
-              monthSelected,
-              daysList,
-              daySelected
-            });
-          }}>
-            {monthList.map((value, i) => (
-              <Picker.Item label={value} value={i} key={"monthList"+value}/>
-            ))}
+          onValueChange={this._onMonthValueChange}>
+          {monthList.map((value, i) => (
+            <Picker.Item label={value} value={i} key={"monthList"+value}/>
+          ))}
         </Picker>
         <Picker
           style={{width: 40, height: 170}}
@@ -131,15 +167,10 @@ export default class DatePickerComponent extends Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(daySelected) => {
-            // console.log(daySelected);
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
-            this.props.onDateChange(date.toDate());
-            this.setState({ daySelected })
-          }}>
-            {daysList.map((value, i) => (
-              <Picker.Item label={`${value}`} value={value} key={"daysList"+value}/>
-            ))}
+          onValueChange={this._onDayValueChange}>
+          {daysList.map((value, i) => (
+            <Picker.Item label={`${value}`} value={value} key={"daysList"+value}/>
+          ))}
         </Picker>
         <Picker
           style={{width: 75, height: 170}}
@@ -151,23 +182,10 @@ export default class DatePickerComponent extends Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(yearSelected, i) => {
-            let date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
-            while (!date.isValid()) {
-              daySelected--;
-              date = moment({ year: yearSelected, month: monthSelected, day: daySelected, hour: hourSelected, minute: minuteSelected });
-            }
-            const daysList = getDaysInMonth(date);
-            this.props.onDateChange(date.toDate());
-            this.setState({
-              yearSelected,
-              daysList,
-              daySelected
-            })
-          }}>
-            {yearList.map((value, i) => (
-              <Picker.Item label={`${value}`} value={value} key={"yearList"+value}/>
-            ))}
+          onValueChange={this._onYearValueChange}>
+          {yearList.map((value, i) => (
+            <Picker.Item label={`${value}`} value={value} key={"yearList"+value}/>
+          ))}
         </Picker>
       </View>
     );
@@ -182,6 +200,7 @@ DatePickerComponent.defaultProps = {
   minDate: currentYear.set('year', minYear).toDate(),
   maxDate: currentYear.set('year', maxYear).toDate(),
   date: new Date(),
+  onDateChange: () => {},
   style: {},
   yearPickerStyle: {},
   monthPickerStyle: {},

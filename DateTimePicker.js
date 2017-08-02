@@ -3,53 +3,14 @@ import {
   View,
 } from 'react-native';
 
-import Picker from './Picker';
 import TimePicker from './TimePicker';
 import DatePicker from './DatePicker';
 import moment from 'moment';
-import _ from 'lodash';
 
-const DATE_FORMAT = 'ddd MMM D';
-
-// checkIfToday = (date) => {
-//   return moment().isSame(moment(date), 'day');
-// }
-
-// getDays = (dateSelected, min, max) => {
-//   const now = moment();
-//   var minDate = moment(min);
-//   var maxDate = moment(max);
-//   if (!minDate.isValid()) {
-//     throw new Error('minDate is not a valid date string');
-//   } else if (!maxDate.isValid()) {
-//     throw new Error('maxDate is not a valid date string');
-//   } else if (minDate.isAfter(maxDate)) {
-//     throw new Error('maxDate should be after minDate');
-//   }
-//   const days = [];
-//   var stopChecking = false;
-//   var l = 0;
-//   var def = 0;
-//   for (var i = minDate; maxDate.isAfter(minDate); minDate.add(1, 'day')) {
-//     var label = minDate.format(DATE_FORMAT);
-//     const date = minDate.toDate();
-//     if (dateSelected.isSame(minDate, 'day')) {
-//       def = l;
-//     }
-//     if (checkIfToday(date) && !stopChecking) {
-//       label = 'Today';
-//       stopChecking = true;
-//     }
-//     l++;
-//     days.push({ date, label, });
-//   }
-//   return { days, def };
-// }
 export default class DateTimePickerComponent extends React.Component {
   constructor(props) {
     super(props);
     const dateSelected = moment(props.date).isValid() ? moment(props.date) : moment();
-    // const dates = getDays(dateSelected, props.minDate, props.maxDate);
     this.state = {
       ...props,
     };
@@ -57,11 +18,8 @@ export default class DateTimePickerComponent extends React.Component {
 
   render() {
     const {
-      // daysList,
       date,
-      // daySelected,
     } = this.state;
-    // console.log(daySelected);
     return (
       <View style={[{ flexDirection: 'row' }, this.state.style]}>
         <DatePicker

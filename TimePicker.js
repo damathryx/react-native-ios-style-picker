@@ -25,11 +25,9 @@ getPeriods = (isPeriodCapitalized) => {
 }
 getNewMinuteSelectedByNewMinuteInterval = (minute, minuteInterval) => {
   const minuteModulus = (minute % minuteInterval);
-  // console.log(minuteModulus);
   if ( minuteModulus !== 0) {
     minute = minute - minuteModulus;
   }
-  // console.log(minute);
   return minute;
 }
 export default class TimePicker extends React.Component {
@@ -54,25 +52,7 @@ export default class TimePicker extends React.Component {
       periodsList: getPeriods(isPeriodCapitalized),
     };
   }
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('TimePicker will receive props');
-  //   var stateObj = this.state;
-  //   stateObj = {
-  //     ...stateObj,
-  //     ...nextProps
-  //   }
-  //   if (nextProps.minuteInterval !== this.props.minuteInterval) {
-  //     var { minuteSelected } = this.state;
-  //     stateObj.minuteSelected = getNewMinuteSelectedByNewMinuteInterval(minuteSelected, nextProps.minuteInterval);
-  //     stateObj.minutesList = getMinutes(nextProps.minuteInterval);
-  //   }
-  //   this.setState(stateObj);
-  // }
   componentWillUpdate(nextProps, nextState) {
-    // console.log('TimePicker will update');
-    // if (nextState.backgroundUpdate) {
-    //   this._onDateChange(nextState.date, nextState.hourSelected, nextState.minuteSelected);
-    // }
     if (nextProps.date !== this.props.date) {
       this.setState({
         backgroundUpdate: true,
@@ -89,19 +69,36 @@ export default class TimePicker extends React.Component {
         });
       }
     }
-    // if (!nextState.backgroundUpdate && (nextState.periodSelected !== this.state.periodSelected)) {
-    //   console.log('WEW');
-    //   this.setState({
-    //     hourSelected: nextState.hourSelected - (nextState.periodSelected === 0 ? 12 : -12),
-    //     backgroundUpdate: true,
-    //   });
-    // }
   }
   _onDateChange = (date, hourSelected, minuteSelected) => {
     const momentDate = moment(date);
     momentDate.hour(hourSelected);
     momentDate.minute(minuteSelected);
     this.props.onDateChange(momentDate.toDate());
+  }
+  _onMinuteValueChange = (minuteSelected) => {
+    this._onDateChange(this.state.date, this.state.hourSelected, minuteSelected);
+    this.setState({
+      minuteSelected,
+      backgroundUpdate: false,
+    })
+  }
+  _onHourValueChange = (hourSelected) => {
+    this._onDateChange(this.state.date, hourSelected, this.state.minuteSelected);
+    this.setState({
+      hourSelected,
+      backgroundUpdate: false,
+    });
+  }
+  //Change hour value when period is changed
+  _onPeriodValueChange = (periodSelected) => {
+    const hourSelected = this.state.hourSelected - (periodSelected === 0 ? 12 : -12);
+    this.setState({
+      periodSelected,
+      hourSelected,
+      backgroundUpdate: true,
+    })
+    this._onDateChange(this.state.date, hourSelected, this.state.minuteSelected);
   }
   render() {
     const {
@@ -122,18 +119,12 @@ export default class TimePicker extends React.Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(hourSelected) => {
-            this._onDateChange(date, hourSelected, this.state.minuteSelected);
-            this.setState({
-              hourSelected,
-              backgroundUpdate: false,
-            });
-          }}>
-            {hoursList.map((value, i) => {
-              return (
-                <Picker.Item label={`${value}`} value={i} key={"hoursList"+i}/>
-              );
-            })}
+          onValueChange={this._onHourValueChange}>
+          {hoursList.map((value, i) => {
+            return (
+              <Picker.Item label={`${value}`} value={i} key={"hoursList"+i}/>
+            );
+          })}
         </Picker>
         <Picker
           style={[{ width: 40, height: 170 }, this.state.minutePickerStyle]}
@@ -145,19 +136,13 @@ export default class TimePicker extends React.Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(minuteSelected) => {
-            this._onDateChange(date, this.state.hourSelected, minuteSelected);
-            this.setState({
-              minuteSelected,
-              backgroundUpdate: false,
-            })
-          }}>
-            {minutesList.map((value, i) => {
-              const label = value.toString().length === 1 ? `0${value}` : `${value}`;
-              return (
-                <Picker.Item label={label} value={value} key={"minutesList"+i}/>
-              )
-            })}
+          onValueChange={this._onMinuteValueChange}>
+          {minutesList.map((value, i) => {
+            const label = value.toString().length === 1 ? `0${value}` : `${value}`;
+            return (
+              <Picker.Item label={label} value={value} key={"minutesList"+i}/>
+            )
+          })}
         </Picker>
         <Picker
           style={[{ width: 40, height: 170 }, this.state.periodPickerStyle]}
@@ -168,18 +153,10 @@ export default class TimePicker extends React.Component {
           indicator={this.state.indicator}
           indicatorSize={this.state.indicatorSize}
           indicatorColor={this.state.indicatorColor}
-          onValueChange={(periodSelected) => {
-            const hourSelected = this.state.hourSelected - (periodSelected === 0 ? 12 : -12);
-            this.setState({
-              periodSelected,
-              hourSelected,
-              backgroundUpdate: true,
-            })
-            this._onDateChange(date, hourSelected, this.state.minuteSelected);
-          }}>
-            {periodsList.map((value, i) => (
-              <Picker.Item label={`${value}`} value={i} key={"periodsList"+i}/>
-            ))}
+          onValueChange={this._onPeriodValueChange}>
+          {periodsList.map((value, i) => (
+            <Picker.Item label={`${value}`} value={i} key={"periodsList"+i}/>
+          ))}
         </Picker>
       </View>
     );
