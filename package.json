@@ -41,7 +41,11 @@
   "bugs": {
     "url": "https://github.com/damathryx/react-native-ios-style-picker/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.5.6",
+    "lodash": "^4.16.6",
+    "moment": "^2.18.1"
+  },
   "description": "React native ios style picker for android.",
   "devDependencies": {},
   "homepage": "https://github.com/damathryx/react-native-ios-style-picker#readme",
