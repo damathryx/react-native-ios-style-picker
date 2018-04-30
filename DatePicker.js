@@ -4,6 +4,7 @@ import {
   View,
 } from 'react-native';
 
+import PropTypes from 'prop-types';
 import Picker from './Picker';
 import moment from 'moment';
 import _ from 'lodash';
@@ -216,19 +217,19 @@ DatePickerComponent.defaultProps = {
   cyclic: true,
 };
 DatePickerComponent.propTypes = {
-  date: React.PropTypes.object,
-  minDate: React.PropTypes.object,
-  maxDate: React.PropTypes.object,
-  onDateChange: React.PropTypes.func,
-  style: React.PropTypes.object,
-  yearPickerItemStyle: React.PropTypes.object,
-  monthPickerStyle: React.PropTypes.object,
-  yearPickerItemStyle: React.PropTypes.object,
-  monthPickerStyle: React.PropTypes.object,
-  indicator: React.PropTypes.bool,
-  indicatorSize: React.PropTypes.number,
-  indicatorColor: React.PropTypes.string,
-  curved: React.PropTypes.bool,
-  atmospheric: React.PropTypes.bool,
-  cyclic: React.PropTypes.bool,
+  date: PropTypes.object,
+  minDate: PropTypes.object,
+  maxDate: PropTypes.object,
+  onDateChange: PropTypes.func,
+  style: PropTypes.object,
+  yearPickerItemStyle: PropTypes.object,
+  monthPickerStyle: PropTypes.object,
+  yearPickerItemStyle: PropTypes.object,
+  monthPickerStyle: PropTypes.object,
+  indicator: PropTypes.bool,
+  indicatorSize: PropTypes.number,
+  indicatorColor: PropTypes.string,
+  curved: PropTypes.bool,
+  atmospheric: PropTypes.bool,
+  cyclic: PropTypes.bool,
 };
