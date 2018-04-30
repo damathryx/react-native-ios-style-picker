@@ -3,6 +3,7 @@ import {
   View,
 } from 'react-native';
 
+import PropTypes from 'prop-types';
 import Picker from './Picker';
 import moment from 'moment';
 import _ from 'lodash';
