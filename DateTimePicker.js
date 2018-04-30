@@ -3,6 +3,7 @@ import {
   View,
 } from 'react-native';
 
+import PropTypes from 'prop-types';
 import TimePicker from './TimePicker';
 import DatePicker from './DatePicker';
 import moment from 'moment';
@@ -90,14 +91,14 @@ DateTimePickerComponent.defaultProps = {
 };
 
 DateTimePickerComponent.propTypes = {
-  date: React.PropTypes.object.isRequired,
-  onDateChange: React.PropTypes.func,
-  minuteInterval: React.PropTypes.number,
-  isPeriodCapitalized: React.PropTypes.bool,
-  indicator: React.PropTypes.bool,
-  indicatorSize: React.PropTypes.number,
-  indicatorColor: React.PropTypes.string,
-  curved: React.PropTypes.bool,
-  atmospheric: React.PropTypes.bool,
-  cyclic: React.PropTypes.bool,
+  date: PropTypes.object.isRequired,
+  onDateChange: PropTypes.func,
+  minuteInterval: PropTypes.number,
+  isPeriodCapitalized: PropTypes.bool,
+  indicator: PropTypes.bool,
+  indicatorSize: PropTypes.number,
+  indicatorColor: PropTypes.string,
+  curved: PropTypes.bool,
+  atmospheric: PropTypes.bool,
+  cyclic: PropTypes.bool,
 };
